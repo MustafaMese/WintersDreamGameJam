@@ -25,7 +25,7 @@ public class BackgroundHelper : MonoBehaviour
     {
         float deltaX = cameraTransform.position.x - cameraLastPosition.x;
 
-        pos += speed * deltaX * 5;
+        pos += speed * deltaX * 10;
 
         if (pos > 1.0F)
 
