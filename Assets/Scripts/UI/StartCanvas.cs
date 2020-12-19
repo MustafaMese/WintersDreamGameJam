@@ -17,7 +17,8 @@ public class StartCanvas : MonoBehaviour
     // Button Action
     public void Tap()
     {
-        print("Bastın");
+        FindObjectOfType<Sled>().start = true;
+        SetPanelActive(false);
         GameManager.Instance.SetGameState(GameState.PLAY);
     }
 
