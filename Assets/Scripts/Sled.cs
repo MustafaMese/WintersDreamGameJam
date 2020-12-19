@@ -22,7 +22,6 @@ public class Sled : MonoBehaviour
     [SerializeField] Vector2 boostForce;
 
     [SerializeField] Rigidbody2D rb;
-    [SerializeField] Collider2D collider2d;
     [SerializeField] GameObject snowParticul;
 
     public bool start = false;
@@ -33,10 +32,18 @@ public class Sled : MonoBehaviour
 
     Transform hitObject;
     Vector2 contactPoint;
+    Collider2D collider2d;
+
+    [SerializeField] float force;
 
     void Start()
     {
         collider2d = GetComponent<BoxCollider2D>();
+    }
+
+    private void Update()
+    {
+       
     }
 
     void FixedUpdate()
@@ -57,7 +64,6 @@ public class Sled : MonoBehaviour
 
         JitteringAvoid(position, groundCheck);
         RotationFix(groundCheck);
-        rb.constraints = RigidbodyConstraints2D.None;
     }
 
     private void ParticulControl(bool left)
@@ -75,12 +81,7 @@ public class Sled : MonoBehaviour
 
     private void RotationFix(List<bool> groundCheck)
     {
-        foreach (var check in groundCheck)
-        {
-            if (check) return;
-        }
-
-        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        rb.AddForce(transform.up * -1 * force, ForceMode2D.Force);
     }
 
     private void JitteringAvoid(Vector2 position, List<bool> groundCheck)

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 448954999923043026}
   - component: {fileID: 448954999923043054}
   - component: {fileID: 448954999923043053}
-  - component: {fileID: 448954999923043049}
   m_Layer: 0
   m_Name: Sled
   m_TagString: Sled
@@ -126,15 +125,17 @@ MonoBehaviour:
   horizontalRayCount: 0
   verticalRayCount: 3
   verticalRaySpacing: 0
+  horizontalRaySpacing: 0
   maxSpeed: {x: 5, y: 5}
   minSpeed: {x: -5, y: -5}
   boostForce: {x: 5, y: 0}
   rb: {fileID: 448954999923043026}
-  collider2d: {fileID: 0}
+  snowParticul: {fileID: 0}
   start: 1
   boost: 1
   spriteRenderer: {fileID: 448954999923043052}
   rayLength: 1.2
+  force: 0
 --- !u!70 &448954999923043053
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -151,19 +152,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0.013617177, y: -0.19063455}
   m_Size: {x: 1.5638312, y: 0.63246334}
   m_Direction: 1
---- !u!114 &448954999923043049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 448954999923043027}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28cde6c26385724438d87726efcea228, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jumpHeight: 0
 --- !u!1 &448955001393346951
 GameObject:
   m_ObjectHideFlags: 0
