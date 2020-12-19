@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 448954999923043026}
   - component: {fileID: 448954999923043054}
   - component: {fileID: 448954999923043053}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sled
   m_TagString: Sled
   m_Icon: {fileID: 0}
@@ -126,16 +126,16 @@ MonoBehaviour:
   verticalRayCount: 3
   verticalRaySpacing: 0
   horizontalRaySpacing: 0
-  maxSpeed: {x: 5, y: 5}
-  minSpeed: {x: -5, y: -5}
-  boostForce: {x: 5, y: 0}
+  maxSpeed: {x: 10, y: 10}
+  minSpeed: {x: -10, y: -10}
+  boostForce: {x: 15, y: 0}
   rb: {fileID: 448954999923043026}
-  snowParticul: {fileID: 0}
-  start: 1
+  snowParticul: {fileID: 238425413303408104}
+  start: 0
   boost: 1
   spriteRenderer: {fileID: 448954999923043052}
   rayLength: 1.2
-  force: 0
+  force: 15
 --- !u!70 &448954999923043053
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -162,13 +162,13 @@ GameObject:
   m_Component:
   - component: {fileID: 448955001393346950}
   - component: {fileID: 448955001393346945}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Character_Deneme
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &448955001393346950
 Transform:
   m_ObjectHideFlags: 0
@@ -245,6 +245,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Snow effect
       objectReference: {fileID: 0}
+    - target: {fileID: 392952912979570474, guid: 7a61e85d52ae7af45a70e0ffed536544,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 467512655348133473, guid: 7a61e85d52ae7af45a70e0ffed536544,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -305,6 +310,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.y
       value: 0.6666667
       objectReference: {fileID: 0}
+    - target: {fileID: 5499950720666247403, guid: 7a61e85d52ae7af45a70e0ffed536544,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5503141732441462567, guid: 7a61e85d52ae7af45a70e0ffed536544,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
@@ -330,6 +340,16 @@ PrefabInstance:
       propertyPath: ShapeModule.angle
       value: 24.53
       objectReference: {fileID: 0}
+    - target: {fileID: 5503141732441462567, guid: 7a61e85d52ae7af45a70e0ffed536544,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5503141732441462567, guid: 7a61e85d52ae7af45a70e0ffed536544,
+        type: 3}
+      propertyPath: InitialModule.startSpeed.minScalar
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6097538079417634632, guid: 7a61e85d52ae7af45a70e0ffed536544,
         type: 3}
       propertyPath: m_SortingOrder
@@ -347,6 +367,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a61e85d52ae7af45a70e0ffed536544, type: 3}
+--- !u!1 &238425413303408104 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 392952912979570474, guid: 7a61e85d52ae7af45a70e0ffed536544,
+    type: 3}
+  m_PrefabInstance: {fileID: 448955000936872642}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &20251327552312483 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 467512655348133473, guid: 7a61e85d52ae7af45a70e0ffed536544,

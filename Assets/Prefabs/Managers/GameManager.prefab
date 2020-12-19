@@ -43,5 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e3ce04f226c0e648a3bd26b383350e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  uiManagerPrefab: {fileID: 0}
-  loadManagerPrefab: {fileID: 0}
+  uiManagerPrefab: {fileID: 8706821161759807300, guid: a6d3f455ed3cfc14293d3a8ccf5920cf,
+    type: 3}
+  loadManagerPrefab: {fileID: 7242021180016207535, guid: 6e445e653f300dc4fb0bbc70f15304aa,
+    type: 3}
