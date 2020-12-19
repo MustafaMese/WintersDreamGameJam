@@ -11,8 +11,9 @@ public class Sled : MonoBehaviour
     public int horizontalRayCount = 4;
     public int verticalRayCount = 4;
 
-    float horizontalRaySpacing;
     public float verticalRaySpacing;
+    public float horizontalRaySpacing;
+
 
     RaycastOrigins raycastOrigins;
 
@@ -22,6 +23,7 @@ public class Sled : MonoBehaviour
 
     [SerializeField] Rigidbody2D rb;
     [SerializeField] Collider2D collider2d;
+    [SerializeField] GameObject snowParticul;
 
     public bool start = false;
     public bool boost = true;
@@ -51,10 +53,24 @@ public class Sled : MonoBehaviour
         else
             rb.velocity = new Vector2(0, rb.velocity.y);
 
-        RotationFix(groundCheck);
+        ParticulControl(groundCheck[0]);
 
         JitteringAvoid(position, groundCheck);
+        RotationFix(groundCheck);
         rb.constraints = RigidbodyConstraints2D.None;
+    }
+
+    private void ParticulControl(bool left)
+    {
+        ParticleSystem p = snowParticul.GetComponent<ParticleSystem>();
+        if (!left)
+            p.Stop();
+        else
+        {
+            if (p.isStopped)
+                p.Play();
+        }
+
     }
 
     private void RotationFix(List<bool> groundCheck)
