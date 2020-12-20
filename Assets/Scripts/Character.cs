@@ -34,12 +34,14 @@ public class Character : MonoBehaviour
     [SerializeField] TextPopup textPopup;
 
     private Vector3 lastPosition;
+    private Animator animator;
 
     private void Start()
     {
         isTouched = false;
         characterState = CharacterState.OnSled;
         lastPosition = transform.position;
+        animator = GetComponent<Animator>();
         StateControl();
 
     }
@@ -62,6 +64,10 @@ public class Character : MonoBehaviour
                 if(characterState == CharacterState.OnSled)
                 {
                     Jump();
+
+                    // Zıplama anim.
+                    animator.SetInteger("tumble", 1);
+
                     characterState = CharacterState.OnFlyingRise;
                     lastPositionControl = false;
                 }
@@ -73,7 +79,8 @@ public class Character : MonoBehaviour
             }
             if (touch.phase == TouchPhase.Ended)
             {
-
+                // Eski haline dönme.
+                animator.SetInteger("tumble", 2);
             }
         }
 
@@ -107,6 +114,8 @@ public class Character : MonoBehaviour
             case CharacterState.OnSled:
                 break;
             case CharacterState.OnSledOnlyJust:
+                // animasyonsuz.
+                animator.SetInteger("tumble", 3);
                 characterState = CharacterState.OnSled;
                 break;
             case CharacterState.OnFlyingRise:
