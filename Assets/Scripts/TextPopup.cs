@@ -15,6 +15,7 @@ public class TextPopup : MonoBehaviour
     [SerializeField] Color fail;
     [SerializeField] float disapperTime = 0;
 
+
     private void Start()
     {
         DOTween.Init();
@@ -44,8 +45,9 @@ public class TextPopup : MonoBehaviour
 
     private void FinishMove()
     {
-        if(gameObject.activeSelf)
+        if (gameObject.activeSelf)
             gameObject.SetActive(false);
+
     }
 
     public float GetDisapperTime()

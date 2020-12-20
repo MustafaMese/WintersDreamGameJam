@@ -16,6 +16,7 @@ public class Character : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] Transform sled;
     [SerializeField] Rigidbody2D rb;
+    [SerializeField] Animator animator;
 
     private CharacterState characterState;
 
@@ -34,14 +35,12 @@ public class Character : MonoBehaviour
     [SerializeField] TextPopup textPopup;
 
     private Vector3 lastPosition;
-    private Animator animator;
-
+    
     private void Start()
     {
         isTouched = false;
         characterState = CharacterState.OnSled;
         lastPosition = transform.position;
-        animator = GetComponent<Animator>();
         StateControl();
 
     }
