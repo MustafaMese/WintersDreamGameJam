@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using EZCameraShake;
 
 public class Obstacle : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Obstacle : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        CameraShaker.Instance.ShakeOnce(15, 2, 0.1f, 0.5f);
+
         particul.SetActive(true);
         StartCoroutine(DestroyObstacle());
     }

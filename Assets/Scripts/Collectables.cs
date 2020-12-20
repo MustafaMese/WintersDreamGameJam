@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Collectables : MonoBehaviour
 {
-    [SerializeField] GameObject firstParticul;
-    [SerializeField] GameObject secondParticul;
+    [SerializeField] ParticleSystem firstParticul;
+    [SerializeField] ParticleSystem secondParticul;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -15,8 +15,9 @@ public class Collectables : MonoBehaviour
 
     private IEnumerator DestroyCollectable()
     {
-        firstParticul.SetActive(false);
-        secondParticul.SetActive(true);
+        firstParticul.gameObject.SetActive(false);
+        secondParticul.gameObject.SetActive(true);
+        secondParticul.Play();
         yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
