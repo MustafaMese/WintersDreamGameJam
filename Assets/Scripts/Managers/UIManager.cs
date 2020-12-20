@@ -119,4 +119,13 @@ public class UIManager : MonoBehaviour
         UIManager._instance = null;
     }
 
+    public void IncreasePoint(int value)
+    {
+        _inGameCanvas.IncreasePoint(value);
+    }
+
+    public void IncreaseGold(int value)
+    {
+        _inGameCanvas.IncreaseGold(value);
+    }
 }

@@ -31,8 +31,9 @@ public class Character : MonoBehaviour
     [SerializeField] GameObject perfectParticle;
     [SerializeField] GameObject moderateParticle;
     [SerializeField] GameObject failParticle;
+    [SerializeField] TextPopup textPopup;
 
-    [SerializeField] Vector3 lastPosition;
+    private Vector3 lastPosition;
 
     private void Start()
     {
@@ -158,17 +159,25 @@ public class Character : MonoBehaviour
     {
         var zValue = transform.eulerAngles.z;
 
+
         if (zValue > 130 && zValue < 205)
         {
             StartCoroutine(ActivateParticle(failParticle));
+            UIManager.Instance.IncreasePoint(-10);
+            textPopup.Setup(-10, transform.position + Vector3.right * 15f, false, true);
         }
         else if ((zValue > 320 && zValue < 359) || (zValue > 0 && zValue < 30))
         {
             StartCoroutine(ActivateParticle(perfectParticle));
+            UIManager.Instance.IncreasePoint(15);
+            textPopup.Setup(15, transform.position + Vector3.right * 15f, true, false);
         }
         else
+        {
             StartCoroutine(ActivateParticle(moderateParticle));
-
+            UIManager.Instance.IncreasePoint(5);
+            textPopup.Setup(10, transform.position + Vector3.right * 15f);
+        }
     }
 
     private IEnumerator ActivateParticle(GameObject particle)

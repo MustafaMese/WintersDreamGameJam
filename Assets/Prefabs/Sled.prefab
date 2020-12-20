@@ -135,7 +135,7 @@ MonoBehaviour:
   boost: 1
   spriteRenderer: {fileID: 448954999923043052}
   rayLength: 1.2
-  force: 15
+  force: 25
 --- !u!70 &448954999923043053
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
