@@ -45,7 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startCanvasPrefab: {fileID: 5160727465393738311, guid: ff9fea6337cb5d142b789b4d4617aafc,
     type: 3}
-  inGameCanvasPrefab: {fileID: 0}
-  endGameCanvasPrefab: {fileID: 0}
-  failCanvasPrefab: {fileID: 0}
-  rewardRoomCanvasPrefab: {fileID: 0}
+  inGameCanvasPrefab: {fileID: 7972011172324919507, guid: 70a90bfaa5417784abf076f5d6afa55f,
+    type: 3}

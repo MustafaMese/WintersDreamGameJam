@@ -6,7 +6,9 @@ using UnityEngine;
 public enum CharacterState
 {
     OnSled,
-    OnFlying
+    OnSledOnlyJust,
+    OnFlyingRise,
+    OnFlyingFall
 }
 public class Character : MonoBehaviour
 {
@@ -16,79 +18,127 @@ public class Character : MonoBehaviour
     [SerializeField] Rigidbody2D rb;
 
     private CharacterState characterState;
-    
+
     private float zRot;
-    private bool canJump;
-    private bool canRotate;
+    private bool lastPositionControl;
 
     // Touching variables
     private Touch touch;
-    private bool isStationary;
-    private bool isBegan;
 
     // Starting variable
-    public bool isTouched;
+    [HideInInspector] public bool isTouched;
+
+    [SerializeField] GameObject perfectParticle;
+    [SerializeField] GameObject moderateParticle;
+    [SerializeField] GameObject failParticle;
+
+    [SerializeField] Vector3 lastPosition;
 
     private void Start()
     {
         isTouched = false;
+        characterState = CharacterState.OnSled;
+        lastPosition = transform.position;
+        StateControl();
+
     }
 
     private void Update()
     {
+
+        if (characterState == CharacterState.OnSled || characterState == CharacterState.OnSledOnlyJust)
+            FollowSled();
+        else
+            FollowSledOnXAxis();
+
         if (!isTouched) return;
 
-        CalculateForceAccordingToAngle();
-        if (Input.touchCount > 0 && canJump)
+        if (Input.touchCount > 0)
         {
-            FollowSledOnXAxis();
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
-                canRotate = true;
-                isBegan = true;
+                if(characterState == CharacterState.OnSled)
+                {
+                    Jump();
+                    characterState = CharacterState.OnFlyingRise;
+                    lastPositionControl = false;
+                }
             }
             if (touch.phase == TouchPhase.Stationary)
             {
-                isStationary = true;
+                if (characterState == CharacterState.OnFlyingFall || characterState == CharacterState.OnFlyingRise) 
+                    RotateCharacter();
             }
             if (touch.phase == TouchPhase.Ended)
             {
-                canJump = false;
-                isStationary = false;
-                canRotate = false;
-            }
-        }
-        else
-        {
-            if (Mathf.Abs(sled.position.y - transform.position.y) < 1)
-            {
-                FollowSled();
-            }
-            else
-            {
-                FollowSledOnXAxis();
+
             }
         }
 
+        
     }
 
     private void FixedUpdate()
     {
+        if (!isTouched) return;
 
-        if (isStationary)
+        
+        StateControl();
+        CalculateForceAccordingToAngle();
+        lastPosition = transform.position;
+    }
+
+    private void VerticalSpeedControl()
+    {
+        float y = rb.velocity.y;
+        print(y);
+        if (y < -15)
+            y = -15;
+
+        rb.velocity = new Vector2(rb.velocity.x, y);
+    }
+
+    private void StateControl()
+    {
+        switch (characterState)
         {
-            if (isBegan)
-            {
-                rb.velocity = Vector3.zero;
-                rb.gravityScale = 1;
-                rb.AddForce(jumpHeight, ForceMode2D.Impulse);
-                isBegan = false;
-            }
-        }
+            case CharacterState.OnSled:
+                break;
+            case CharacterState.OnSledOnlyJust:
+                characterState = CharacterState.OnSled;
+                break;
+            case CharacterState.OnFlyingRise:
+                FollowSledOnXAxis();
 
-        if (canRotate)
-            RotateCharacter();
+                if (lastPositionControl && lastPosition.y > transform.position.y)
+                    characterState = CharacterState.OnFlyingFall;
+
+                lastPositionControl = true;
+                break;
+            case CharacterState.OnFlyingFall:
+
+                if (Mathf.Abs(sled.position.y - transform.position.y) < 1)
+                {
+                    WinAndLoseCondition();
+                    FollowSled();
+                    characterState = CharacterState.OnSledOnlyJust;
+                }
+                else
+                    FollowSledOnXAxis();
+
+                break;
+            default:
+                break;
+        }
+    }
+
+
+    private void Jump()
+    {
+        rb.velocity = Vector3.zero;
+        rb.gravityScale = 1;
+        rb.AddForce(jumpHeight, ForceMode2D.Impulse);
     }
 
     private void RotateCharacter()
@@ -99,19 +149,33 @@ public class Character : MonoBehaviour
 
     private void FollowSled()
     {
-        LoseCondition();
-
         rb.gravityScale = 0;
-        canRotate = false;
-        canJump = true;
         transform.position = sled.position + Vector3.up * 0.5f;
         transform.rotation = sled.rotation;
     }
 
-    private void LoseCondition()
+    private void WinAndLoseCondition()
     {
-        if (transform.eulerAngles.z > 130 && transform.eulerAngles.z < 205)
-            print("Lose");
+        var zValue = transform.eulerAngles.z;
+
+        if (zValue > 130 && zValue < 205)
+        {
+            StartCoroutine(ActivateParticle(failParticle));
+        }
+        else if ((zValue > 320 && zValue < 359) || (zValue > 0 && zValue < 30))
+        {
+            StartCoroutine(ActivateParticle(perfectParticle));
+        }
+        else
+            StartCoroutine(ActivateParticle(moderateParticle));
+
+    }
+
+    private IEnumerator ActivateParticle(GameObject particle)
+    {
+        particle.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        particle.SetActive(false);
     }
 
     private void FollowSledOnXAxis()
@@ -126,13 +190,14 @@ public class Character : MonoBehaviour
         if(zAngle < 330 && zAngle > 300){
             jumpHeight.y =2;
         }
-        else{
+        else
+        {
             jumpHeight.y = 10;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        print("Lose");
+
     }
 }
