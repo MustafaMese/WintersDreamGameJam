@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Obstacle
   - Sled
+  - Character
   layers:
   - Default
   - TransparentFX

@@ -5,17 +5,17 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
     [SerializeField] GameObject particul;
+    [SerializeField] SpriteRenderer sRenderer;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        // Partiküller uçuşur
-        //particul.SetActive(true);
+        particul.SetActive(true);
         StartCoroutine(DestroyObstacle());
     }
 
     private IEnumerator DestroyObstacle()
     {
-        gameObject.SetActive(false);
+        sRenderer.sprite = null;
         yield return new WaitForSeconds(5f);
         Destroy(gameObject);
     }
