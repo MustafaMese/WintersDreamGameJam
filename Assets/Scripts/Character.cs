@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,6 +45,7 @@ public class Character : MonoBehaviour
             touch = Input.GetTouch(0);
             if (touch.phase == TouchPhase.Began)
             {
+                canRotate = true;
                 isBegan = true;
             }
             if (touch.phase == TouchPhase.Stationary)
@@ -73,6 +75,7 @@ public class Character : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (isStationary)
         {
             if (isBegan)
@@ -81,36 +84,44 @@ public class Character : MonoBehaviour
                 rb.gravityScale = 1;
                 rb.AddForce(jumpHeight, ForceMode2D.Impulse);
                 isBegan = false;
-                canRotate = true;
-                print("1");
             }
-            RotateCharacter();
         }
+
+        if (canRotate)
+            RotateCharacter();
     }
 
     private void RotateCharacter()
     {
-        if (!canRotate) return;
-
         zRot += Time.deltaTime * speed;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, -zRot));
     }
 
     private void FollowSled()
     {
+        LoseCondition();
+
         rb.gravityScale = 0;
-        canJump = true;
         canRotate = false;
+        canJump = true;
         transform.position = sled.position + Vector3.up * 0.5f;
         transform.rotation = sled.rotation;
     }
+
+    private void LoseCondition()
+    {
+        if (transform.eulerAngles.z > 130 && transform.eulerAngles.z < 205)
+            print("Lose");
+    }
+
     private void FollowSledOnXAxis()
     {
         Vector2 tempPos = transform.position;
         tempPos.x = sled.position.x;
         transform.position = tempPos;
     }
-    private void CalculateForceAccordingToAngle(){
+    private void CalculateForceAccordingToAngle()
+    {
         float zAngle = sled.eulerAngles.z;
         if(zAngle < 330 && zAngle > 300){
             jumpHeight.y =2;
@@ -118,5 +129,10 @@ public class Character : MonoBehaviour
         else{
             jumpHeight.y = 10;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("Lose");
     }
 }
