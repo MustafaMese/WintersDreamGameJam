@@ -159,7 +159,6 @@ public class Character : MonoBehaviour
     {
         var zValue = transform.eulerAngles.z;
 
-
         if (zValue > 130 && zValue < 205)
         {
             StartCoroutine(ActivateParticle(failParticle));
