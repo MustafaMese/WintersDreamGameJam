@@ -13,14 +13,30 @@ public class Character : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] Transform sled;
     [SerializeField] Rigidbody2D rb;
+
     private CharacterState characterState;
-    private Touch touch;
+    
     private float zRot;
     private bool canJump;
+    private bool canRotate;
+
+    // Touching variables
+    private Touch touch;
     private bool isStationary;
     private bool isBegan;
+
+    // Starting variable
+    public bool isTouched;
+
+    private void Start()
+    {
+        isTouched = false;
+    }
+
     private void Update()
     {
+        if (!isTouched) return;
+
         CalculateForceAccordingToAngle();
         if (Input.touchCount > 0 && canJump)
         {
@@ -38,6 +54,7 @@ public class Character : MonoBehaviour
             {
                 canJump = false;
                 isStationary = false;
+                canRotate = false;
             }
         }
         else
@@ -64,6 +81,8 @@ public class Character : MonoBehaviour
                 rb.gravityScale = 1;
                 rb.AddForce(jumpHeight, ForceMode2D.Impulse);
                 isBegan = false;
+                canRotate = true;
+                print("1");
             }
             RotateCharacter();
         }
@@ -71,6 +90,8 @@ public class Character : MonoBehaviour
 
     private void RotateCharacter()
     {
+        if (!canRotate) return;
+
         zRot += Time.deltaTime * speed;
         transform.rotation = Quaternion.Euler(new Vector3(0, 0, -zRot));
     }
@@ -79,7 +100,8 @@ public class Character : MonoBehaviour
     {
         rb.gravityScale = 0;
         canJump = true;
-        transform.position = sled.position;
+        canRotate = false;
+        transform.position = sled.position + Vector3.up * 0.5f;
         transform.rotation = sled.rotation;
     }
     private void FollowSledOnXAxis()
@@ -90,7 +112,6 @@ public class Character : MonoBehaviour
     }
     private void CalculateForceAccordingToAngle(){
         float zAngle = sled.eulerAngles.z;
-        print(zAngle);
         if(zAngle < 330 && zAngle > 300){
             jumpHeight.y =2;
         }

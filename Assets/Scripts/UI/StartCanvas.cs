@@ -18,6 +18,7 @@ public class StartCanvas : MonoBehaviour
     public void Tap()
     {
         FindObjectOfType<Sled>().start = true;
+        FindObjectOfType<Character>().isTouched = true;
         SetPanelActive(false);
         GameManager.Instance.SetGameState(GameState.PLAY);
     }
